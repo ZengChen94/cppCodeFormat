@@ -1,0 +1,14 @@
+Lines=50
+
+FunctionName:main
+Caller:
+Called:fact,rfact
+
+FunctionName:fact
+Caller:main
+Called:
+
+FunctionName:rfact
+Caller:main,rfact
+Called:rfact
+
