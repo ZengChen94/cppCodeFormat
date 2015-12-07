@@ -5,7 +5,7 @@ def find_all_index(arr,item):
     return [i for i,a in enumerate(arr) if a==item]
 
 #-----------------------------------Function Format-----------------------------------
-#filenameIn--------imput testSample
+#filenameIn--------input testSample
 #filenameOut1------output formatted codes
 #filenameOut2------output grammer analysis result
 def format(filenameIn, filenameOut1, filenameOut2):
@@ -355,7 +355,7 @@ def format(filenameIn, filenameOut1, filenameOut2):
     fileWriteObj.close()
 
 #-----------------------------------Function Simplify-----------------------------------
-#filenameIn--------imput testSample
+#filenameIn--------input testSample
 #filenameOut------output simplified codes
 def simplify(filenameIn, filenameOut):
     variable_name_list = []
@@ -496,3 +496,35 @@ def simplify(filenameIn, filenameOut):
 
     #print variable_name_list,variable_num_list
     #print func_name_list,func_declare_num_list,func_work_num_list
+
+
+#-----------------------------------Function Style1-----------------------------------
+#filenameIn--------input testSample
+#filenameOut-------output style1 codes
+def style1(filenameIn, filenameOut):
+    fileReadObj = open(filenameIn)
+    fileBeforeFormater = []
+    leftBucket_line_list = []
+    lineNum = -1
+    for fileString in fileReadObj.readlines():
+        lineNum += 1
+        fileBeforeFormater.append(fileString)
+        match3_1 = re.match(r'{.*|.*{|.*{.*', fileString)
+        if match3_1:
+            leftBucket_line_list.append(lineNum)
+    for i in leftBucket_line_list:
+        tmp_string = fileBeforeFormater[i-1]
+        tmp_string = tmp_string[0:len(tmp_string)-1]+'{'+tmp_string[len(tmp_string)-1]
+        fileBeforeFormater[i-1] = tmp_string
+        fileBeforeFormater[i] = ''
+    #------------------------------output the codes------------------------------
+    fileWriteObj = open(filenameOut, 'w')
+    for i in fileBeforeFormater:
+        fileWriteObj.write(i)
+    fileWriteObj.close()
+
+#-----------------------------------Function Style2-----------------------------------
+#filenameIn--------input testSample
+#filenameOut-------output style2 codes
+def style2(filenameIn, filenameOut):
+    pass
