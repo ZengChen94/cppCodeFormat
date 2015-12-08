@@ -4,10 +4,12 @@ long fact(int n);
 
 long rfact(int n);
 
+int uselessFunc(int n);
+
 int main(void)
 {
     int num;    printf("This program calculates factorials.\n");	printf("Enter a value in the range 0-12 (q to quit):\n");
-
+    int useless = 0;
     while (scanf("%d", &num) == 1)
     {
         if (num < 0)
@@ -50,4 +52,9 @@ long rfact(int n)
         ans = 1;
     }
     return ans;
+}
+
+int uselessFunc(int n)
+{
+    useless func;
 }

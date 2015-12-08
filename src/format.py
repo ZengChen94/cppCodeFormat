@@ -276,7 +276,7 @@ def format(filenameIn, filenameOut1, filenameOut2):
         fileWriteObj.write(i)
     fileWriteObj.close()
 
-    #------------------------------output result to txt------------------------------
+    #------------------------------output analysis-result to txt------------------------------
     output = 'Lines=' + str(cnt_lines) + '\n\n'
 
     outputList = []
@@ -498,10 +498,10 @@ def simplify(filenameIn, filenameOut):
     #print func_name_list,func_declare_num_list,func_work_num_list
 
 
-#-----------------------------------Function Style1-----------------------------------
+#-----------------------------------Function Style-----------------------------------
 #filenameIn--------input testSample
-#filenameOut-------output style1 codes
-def style1(filenameIn, filenameOut):
+#filenameOut-------output style codes
+def style(filenameIn, filenameOut):
     fileReadObj = open(filenameIn)
     fileBeforeFormater = []
     leftBucket_line_list = []
@@ -522,9 +522,3 @@ def style1(filenameIn, filenameOut):
     for i in fileBeforeFormater:
         fileWriteObj.write(i)
     fileWriteObj.close()
-
-#-----------------------------------Function Style2-----------------------------------
-#filenameIn--------input testSample
-#filenameOut-------output style2 codes
-def style2(filenameIn, filenameOut):
-    pass
