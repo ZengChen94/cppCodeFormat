@@ -8,7 +8,11 @@ def find_all_index(arr,item):
 #filenameIn--------input testSample
 #filenameOut1------output formatted codes
 #filenameOut2------output grammer analysis result
-def format(filenameIn, filenameOut1, filenameOut2):
+def format_called(filenameIn, *tuple_arg):
+    filenameOut1 = tuple_arg[0]
+    if len(tuple_arg) == 2:
+        filenameOut2 = tuple_arg[1]
+
     fileReadObj = open(filenameIn)
     fileBeforeFormater = []
     match1_1_list = []
@@ -275,6 +279,11 @@ def format(filenameIn, filenameOut1, filenameOut2):
     for i in fileBeforeFormater:
         fileWriteObj.write(i)
     fileWriteObj.close()
+
+    # ---------------------------------------------
+    if len(tuple_arg) == 1:
+        return
+    # ---------------------------------------------
 
     #------------------------------output analysis-result to txt------------------------------
     output = 'Lines=' + str(cnt_lines) + '\n\n'
