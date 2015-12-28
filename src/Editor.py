@@ -1,8 +1,23 @@
 import sys
 import os
+import os.path
 from format_call import *
 from PyQt5 import QtWidgets, QtGui
 from PyQt5 import Qsci
+from PyQt5 import QtCore
+
+
+class TextEditorTab(QtWidgets.QTabWidget):
+    def __init__(self):
+        super(TextEditorTab, self).__init__()
+        self.setTabsClosable(True)
+        self.setMovable(True)
+        self.setUsesScrollButtons(True)
+        self.tabCloseRequested.connect(self.closeTab)
+
+
+    def closeTab(self, index):
+        self.removeTab(index)
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -13,15 +28,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def init_GUI(self):
+        # ----------------------------------------------------------------------
         self.resize(700, 500)
         self.setWindowTitle('Editor')
         text = Qsci.QsciScintilla()
         self.text_setting(text)
 
-        self.tab_widget = QtWidgets.QTabWidget()
-        self.tab_widget.setTabsClosable(True)
-        self.tab_widget.setMovable(True)
-        self.tab_widget.setUsesScrollButtons(True)
+        #initiate the tab widget
+        self.tab_widget = TextEditorTab()
 
         # at start, one default tab
         self.tab_widget.addTab(text,'new')
@@ -30,9 +44,25 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.statusBar()
 
-        # create menu bar
+        # COMMON ACTIONS--------------------------------------------------------
+        exit_action = self.make_action(name='Exit',
+                                        shortCut='Ctrl+Q',
+                                        statusTip='Exit',
+                                        callback=QtWidgets.qApp.quit)
+        # TODO
+        run_code_action = self.make_action(name='Run',
+                                        shortCut='Ctrl+R',
+                                        statusTip='Run Code',
+                                        callback=self.run_code)
+
+        # ADD TOOLBAR-----------------------------------------------------------
+        self.toolBar = self.addToolBar('Exit')
+        self.toolBar.addAction(exit_action)
+        self.toolBar.addAction(run_code_action)
+
+        # create menu bar-------------------------------------------------------
         menu_bar = self.menuBar()
-        # create actions under file menu
+        # create actions under file menu----------------------------------------
         file_actions = []
         file_actions.append(self.make_action(name='New',
                                         shortCut='Ctrl+N',
@@ -50,17 +80,14 @@ class MainWindow(QtWidgets.QMainWindow):
                                         shortCut='Ctrl+Alt+S',
                                         statusTip='Save File As...',
                                         callback=self.save_as_file))
-        file_actions.append(self.make_action(name='Exit',
-                                        shortCut='Ctrl+Q',
-                                        statusTip='Exit',
-                                        callback=QtWidgets.qApp.quit))
+        file_actions.append(exit_action)
 
 
 
         file_menu = menu_bar.addMenu('File')
         file_menu.addActions(file_actions)
 
-        # create actions under format menu
+        # create actions under format menu--------------------------------------
         format_actions = []
         format_actions.append(self.make_action(name='Format Code',
                                         shortCut='Ctrl+Alt+F',
@@ -77,7 +104,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def simplify_code(self):
-        data = self.text.text()
+        data = self.tab_widget.currentWidget().text()
         fileWriteObj = open('tempIn.txt', 'w')
         fileWriteObj.write(data)
         fileWriteObj.close()
@@ -90,11 +117,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         os.remove('tempIn.txt')
         os.remove('tempOut.txt')
-        self.text.setText(data)
+        self.tab_widget.currentWidget().setText(data)
 
 
     def format_code(self):
-        data = self.text.text()
+        data = self.tab_widget.currentWidget().text()
         fileWriteObj = open('tempIn.txt', 'w')
         fileWriteObj.write(data)
         fileWriteObj.close()
@@ -107,7 +134,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         os.remove('tempIn.txt')
         os.remove('tempOut.txt')
-        self.text.setText(data)
+        self.tab_widget.currentWidget().setText(data)
 
 
     def open_file(self):
@@ -120,13 +147,14 @@ class MainWindow(QtWidgets.QMainWindow):
             return
 
         file = open(file_name[0], "r")
-        print('filename = ',file_name)
+
         self.filename = file_name[0]
         data = file.read()
-        self.text = self.tab_widget.currentWidget()
-        self.text.setText(data)
+        text = self.tab_widget.currentWidget()
+        text.setText(data)
         self.setWindowTitle(self.filename)
-        self.tab_widget.setTabText(self.tab_widget.currentIndex(),file_name[0])
+        p, f = os.path.split(file_name[0])
+        self.tab_widget.setTabText(self.tab_widget.currentIndex(),f)
 
 
     def new_file(self):
@@ -225,6 +253,12 @@ class MainWindow(QtWidgets.QMainWindow):
         action.triggered.connect(callback)
         return action
 
+
+    # TODO
+	# To fellow coder:
+	# if you press the "run" button on the main window, the function will be triggered.
+    def run_code(self):
+        pass
 
 app = QtWidgets.QApplication(sys.argv)
 main_window = MainWindow()
