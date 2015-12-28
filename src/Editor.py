@@ -253,14 +253,15 @@ class MainWindow(QtWidgets.QMainWindow):
         action.triggered.connect(callback)
         return action
 
-
-    # TODO
-	# To fellow coder:
-	# if you press the "run" button on the main window, the function will be triggered.
     def run_code(self):
-        pass
+        command = 'gcc ' + self.filename
+        #print(self.filename)
+        os.system(command)
+        command = 'a'
+        os.system(command)
 
 app = QtWidgets.QApplication(sys.argv)
 main_window = MainWindow()
+main_window.showMaximized()
 main_window.show()
 sys.exit(app.exec_())
