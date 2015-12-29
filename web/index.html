@@ -35,12 +35,14 @@
 	    <script src="js/code-blast.js"></script>
         
         <div class="nav"> 
-            <a href="javascript:void(0);">Open</a>  
-            <a href="javascript:void(0);">Format</a> 
-            <a href="javascript:void(0);">Simplify</a>  
-            <a href="zengchen94.github.io">Github</a>             
+            <a href="javascript:void(0);" onclick="document.getElementById('file').click()">Open</a>  
+            <a href="javascript:void(0);" onclick="document.getElementById('format').click()">Format</a> 
+            <a href="javascript:void(0);" onclick="document.getElementById('simplify').click()">Simplify</a>  
+            <a href="zengchen94.github.io" onclick="document.getElementById('github').click()">Github</a>             
             <a class="highlight" href="javascript:void(0);">Contact</a>  
         </div>
+        
+        
         
 	    <script>
 		window.cm = CodeMirror(document.body, {
@@ -54,11 +56,20 @@
             autoCloseTags: true,
 			blastCode: { effect: 2 },
 		});
+        
+        
 	    </script>
         
         <div class="nav"> 
             <a href="javascript:void(0);" style="color:red; font-size:150%">Designed by zcunique</a>  
         </div>
-
+        
+        <form style="display:none;">
+            <input id="file" type="file"/>
+            <input id="format" type="button"/>
+            <input id="simplify" type="button"/>
+            <input id="github" type="button"/>
+            <input id="contact" type="button"/>
+        </form>
 	</body>
 </html>
