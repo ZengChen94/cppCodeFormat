@@ -3,9 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Code blast plugin for Codemirror</title>
-		<link rel="stylesheet" href="codemirror/lib/codemirror.css">
-		<link rel="stylesheet" href="codemirror/theme/monokai.css">
-        <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+		<link rel="stylesheet" href="static/codemirror/lib/codemirror.css">
+		<link rel="stylesheet" href="static/codemirror/theme/monokai.css">
+        <link rel="stylesheet" href="static/css/style.css" media="screen" type="text/css" />
 		<style>
 		body {
 			margin: 0;
@@ -25,14 +25,14 @@
 
 	<body>
 
-	    <script src="codemirror/lib/codemirror.js"></script>
-	    <script src="codemirror/addon/edit/closetag.js"></script>
-	    <script src="codemirror/mode/xml/xml.js"></script>
-	    <script src="codemirror/mode/javascript/javascript.js"></script>
-	    <script src="codemirror/mode/css/css.js"></script>
-	    <script src="codemirror/mode/htmlmixed/htmlmixed.js"></script>
-        <script src="codemirror/mode/clike/clike.js"></script>
-	    <script src="js/code-blast.js"></script>
+	    <script src="static/codemirror/lib/codemirror.js"></script>
+	    <script src="static/codemirror/addon/edit/closetag.js"></script>
+	    <script src="static/codemirror/mode/xml/xml.js"></script>
+	    <script src="static/codemirror/mode/javascript/javascript.js"></script>
+	    <script src="static/codemirror/mode/css/css.js"></script>
+	    <script src="static/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="static/codemirror/mode/clike/clike.js"></script>
+	    <script src="static/js/code-blast.js"></script>
         
         <div class="nav"> 
             <a href="javascript:void(0);" onclick="document.getElementById('file').click()">Open</a>  
@@ -64,9 +64,9 @@
             <a href="javascript:void(0);" style="color:red; font-size:150%">Designed by zcunique</a>  
         </div>
         
-        <form style="display:none;">
-            <input id="file" type="file"/>
-            <input id="format" type="button"/>
+        <form id="form" style="display:none;" action="http://localhost:8888/upload" method="post" enctype="multipart/form-data">
+            <input name="file" id="file" type="file" />
+            <input id="format" type="button" onclick="document.getElementById('form').submit()"/>
             <input id="simplify" type="button"/>
             <input id="github" type="button"/>
             <input id="contact" type="button"/>

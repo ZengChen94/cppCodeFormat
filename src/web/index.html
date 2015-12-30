@@ -1,0 +1,138 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Code blast plugin for Codemirror</title>
+		<link rel="stylesheet" href="static/codemirror/lib/codemirror.css">
+		<link rel="stylesheet" href="static/codemirror/theme/monokai.css">
+        <link rel="stylesheet" href="static/css/style.css" media="screen" type="text/css" />
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				background: #222;
+			}
+
+			/* Codemirror */
+			.Codemirror {
+				width: 100%;
+				height: 100%;
+				font-size: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+	    <script src="static/codemirror/lib/codemirror.js"></script>
+	    <script src="static/codemirror/addon/edit/closetag.js"></script>
+	    <script src="static/codemirror/mode/xml/xml.js"></script>
+	    <script src="static/codemirror/mode/javascript/javascript.js"></script>
+	    <script src="static/codemirror/mode/css/css.js"></script>
+	    <script src="static/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="static/codemirror/mode/clike/clike.js"></script>
+	    <script src="static/js/code-blast.js"></script>
+		<script src="static/js/jquery-1.7.min.js"></script>
+	        
+        <div class="nav"> 
+            <a href="javascript:void(0);" onclick="document.getElementById('file').click()">Open</a>  
+            <a href="javascript:void(0);" onclick="document.getElementById('format').click()">Format</a> 
+            <a href="javascript:void(0);" onclick="document.getElementById('simplify').click()">Simplify</a>
+            <a href="javascript:void(0);" onclick="document.getElementById('style').click()">Style</a> 
+            <a href="https://zengchen94.github.io">Github</a>             
+            <a class="highlight" href="javascript:void(0);">Contact</a>  
+        </div>
+   
+
+
+	    <script>
+			window.cm = CodeMirror(document.body, {
+				lineNumbers: true,
+				mode:  "text/x-csrc",
+				theme: 'monokai',
+				lineWrapping: true,
+				autofocus: true,
+				tabSize: 4,
+				value: "#include <stdio.h>\n\nvoid main(void)\n{\n    printf(\"hello world\");\n    return 0;\n}",
+	            autoCloseTags: true,
+				blastCode: { effect: 2 },
+			});
+	    </script>
+        
+        <div class="nav"> 
+            <a href="javascript:void(0);" style="color:red; font-size:150%">Designed by zcunique</a>  
+        </div>
+        
+        <form id="form" style="display:none;">
+            <input name="file" id="file" type="file" onchange="fileShow()" />
+            <input id="format" type="button"/>
+            <input id="simplify" type="button"/>
+            <input id="style" type="button"/>
+            <input id="github" type="button"/>
+            <input id="contact" type="button"/>
+        </form>
+        <script>
+        	function getFileName(o){
+			    var pos=o.lastIndexOf("\\");
+			    return o.substring(pos+1);  
+			}
+
+			function fileShow(){
+				var file = $("#file").val();
+				var fileName = getFileName(file);
+				// alert(fileName);
+  				htmlobj=$.ajax({
+			        url: 'http://localhost:8800/code',
+			        data: fileName,
+			        type: 'POST',
+			        success: function (res) {
+			            window.cm.setValue(res);
+			        },
+			    })
+			}
+
+			$("#format").click(function(){
+				var file = $("#file").val();
+				var fileName = getFileName(file);
+				// alert(fileName);
+  				htmlobj=$.ajax({
+			        url: 'http://localhost:8800/format',
+			        data: fileName,
+			        type: 'POST',
+			        success: function (res) {
+			            window.cm.setValue(res);
+			        },
+			    })
+  			});
+
+			$("#simplify").click(function(){
+				var file = $("#file").val();
+				var fileName = getFileName(file);
+				// alert(fileName);
+  				htmlobj=$.ajax({
+			        url: 'http://localhost:8800/simplify',
+			        data: fileName,
+			        type: 'POST',
+			        success: function (res) {
+			            window.cm.setValue(res);
+			        },
+			    })
+  			});
+
+  			$("#style").click(function(){
+				var file = $("#file").val();
+				var fileName = getFileName(file);
+				// alert(fileName);
+  				htmlobj=$.ajax({
+			        url: 'http://localhost:8800/style',
+			        data: fileName,
+			        type: 'POST',
+			        success: function (res) {
+			            window.cm.setValue(res);
+			        },
+			    })
+  			});
+    	</script>
+
+	</body>
+</html>
+

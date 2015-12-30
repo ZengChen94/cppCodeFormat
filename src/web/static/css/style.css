@@ -6,7 +6,7 @@ body {
 .nav { 
     margin:2% 
 } 
-.nav a { 
+.nav a,input { 
     background: -moz-linear-gradient(center top, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.34) 100%) repeat scroll 0 0 transparent; 
     border: 1px solid #121212; 
     border-right: none; 
